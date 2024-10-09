@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "594086372653",
+    "project_id": "new-project-fcdcc",
+    "storage_bucket": "new-project-fcdcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594086372653:android:dddcc671be18c719db1fa4",
+        "android_client_info": {
+          "package_name": "com.example.cc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv4rBYSSV2O36tupIj266ty9Fo656Fm7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,3 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -16,26 +13,44 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed('categories');
+        },
+        backgroundColor: const Color.fromARGB(255, 151, 119, 238),
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: const Text('home page'),
-        backgroundColor: Colors.blue,
         actions: [
           IconButton(
-              onPressed: () async {
+              onPressed: () {
                 GoogleSignIn googlesignin = GoogleSignIn();
                 googlesignin.disconnect();
-                await FirebaseAuth.instance.signOut();
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil("login", (rote) => false);
               },
-              icon: Icon(Icons.exit_to_app_rounded))
+              icon: const Icon(Icons.exit_to_app_rounded))
         ],
       ),
-      body: ListView(
+      body: GridView(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, mainAxisExtent: 160),
         children: [
-          FirebaseAuth.instance.currentUser!.emailVerified
-              ? Text('welcome')
-              : MaterialButton(onPressed: (){FirebaseAuth.instance.currentUser!.sendEmailVerification();},child: Text('verifeidemail'),color: Colors.blue,)
+          // Card(
+          //   child: Container(
+          //     padding: const EdgeInsets.all(10),
+          //     child: Column(
+          //       children: [
+          //         Image.asset(
+          //           'assets/images/folder.png',
+          //           height: 100,
+          //         ),
+          //         const Text('Company')
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     ));

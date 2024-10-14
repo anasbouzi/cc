@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> {
             key: formstate,
             child: ListView(
               children: [
-                Logo(),
+                const Logo(),
                 const Text(
                   "Signup",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -45,6 +45,7 @@ class _SignUpState extends State<SignUp> {
                     if (val == "") {
                       return "Can`t be empty";
                     }
+                    return null;
                   },
                 ),
                 const Text('Email'),
@@ -58,6 +59,7 @@ class _SignUpState extends State<SignUp> {
                     if (val == "") {
                       return "Can`t be empty";
                     }
+                    return null;
                   },
                 ),
                 const SizedBox(
@@ -74,6 +76,7 @@ class _SignUpState extends State<SignUp> {
                     if (val == "") {
                       return "Can`t be empty";
                     }
+                    return null;
                   },
                 ),
                 const SizedBox(
@@ -97,19 +100,21 @@ class _SignUpState extends State<SignUp> {
                           email: email.text,
                           password: password.text,
                         );
-                        FirebaseAuth.instance.currentUser!.sendEmailVerification();
+                        FirebaseAuth.instance.currentUser!
+                            .sendEmailVerification();
                         Navigator.of(context).pushReplacementNamed('login');
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {
-                          print('The password provided is too weak.');
+                          const Text('The password provided is too weak.');
                         } else if (e.code == 'email-already-in-use') {
-                          print('The account already exists for that email.');
+                          const Text(
+                              'The account already exists for that email.');
                         }
                       } catch (e) {
-                        print(e);
+                        Text("$e");
                       }
                     } else {
-                      print('not valid');
+                      const Text('not valid');
                     }
                   },
                 ),
@@ -121,7 +126,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 InkWell(
                   onTap: () {
-
                     Navigator.of(context).pushReplacementNamed('login');
                   },
                   child: const Center(

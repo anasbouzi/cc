@@ -20,7 +20,7 @@ class _LoginState extends State<Login> {
 
   Future signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     if (googleUser == null) {
       return;
     }
@@ -71,6 +71,7 @@ class _LoginState extends State<Login> {
                     if (val == "") {
                       return "Can`t be empty";
                     }
+                    return null;
                   },
                 ),
                 const SizedBox(
@@ -87,15 +88,60 @@ class _LoginState extends State<Login> {
                     if (val == "") {
                       return "Can`t be empty";
                     }
+                    return null;
                   },
                 ),
                 const SizedBox(
                   height: 13,
                 ),
-                const Text(
-                  'Forget password ?',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.right,
+                InkWell(
+                  onTap: () {
+                    if (email.text == "") {
+                      AwesomeDialog(
+                        // ignore: use_build_context_synchronously
+                        context: context,
+                        dialogType: DialogType.error,
+                        animType: AnimType.rightSlide,
+                        title: 'Error',
+                        desc: 'Email Can`t be empty',
+                        btnCancelOnPress: () {},
+                        btnOkOnPress: () {},
+                      ).show();
+                      return;
+                    } else {
+                      try {
+                        FirebaseAuth.instance
+                            .sendPasswordResetEmail(email: email.text);
+                        AwesomeDialog(
+                          // ignore: use_build_context_synchronously
+                          context: context,
+                          dialogType: DialogType.success,
+                          animType: AnimType.rightSlide,
+                          title: 'Done',
+                          desc: 'ckeck your Email to change password',
+                          //btnCancelOnPress: () {},
+                          btnOkOnPress: () {},
+                        ).show();
+                      } catch (e) {
+                        print("$e ==================");
+                        AwesomeDialog(
+                          // ignore: use_build_context_synchronously
+                          context: context,
+                          dialogType: DialogType.success,
+                          animType: AnimType.rightSlide,
+                          title: 'Error',
+                          desc: 'No Email',
+                          //btnCancelOnPress: () {},
+                          btnOkOnPress: () {},
+                        ).show();
+                      }
+                    }
+                  },
+                  child: const Text(
+                    'Forget password ?',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.right,
+                  ),
                 ),
                 const SizedBox(
                   height: 50,
